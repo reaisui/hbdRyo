@@ -1,0 +1,230 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBD Ryo Yamada</title>
+    <link rel="icon" href="https://example.com/icon.png" type="image/png"> <!-- Ganti dengan URL ikon Anda -->
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('1306304.jpg'); /* Path ke gambar background Anda */
+            background-size: cover;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .text {
+            position: absolute;
+            color: white;
+            font-size: 2em;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        .text.show {
+            opacity: 1;
+        }
+        .text.shadow {
+            text-shadow: 3px 2px 6px rgba(0, 0, 0, 0.5);
+        }
+        /* Popup styling */
+        #popup, #popup-end {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        #popup-content, #popup-end-content {
+            background: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            position: relative;
+        }
+        #popup-content h2, #popup-end-content h2 {
+            font-size: 1.5em;
+        }
+        #popup-content button, #popup-end-content button {
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+        }
+        .blue {
+            background-color: blue;
+            color: white;
+        }
+        .red {
+            background-color: red;
+            color: white;
+        }
+        /* Gambar popup */
+        #popup-content img {
+            max-width: 150px;
+            display: block;
+            margin: 10px auto;
+        }
+        /* Popup penutup */
+        #popup-end img {
+            max-width: 200px;
+            margin-bottom: 10px;
+        }
+        #popup-end-content {
+            position: relative;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            border: 5px solid rgb(35, 79, 237); /* Bingkai ulang tahun */
+            box-shadow: 0 0 20px rgba(255, 192, 203, 0.8); /* Efek glowing */
+        }
+        #popup-end-content h2 {
+            font-size: 2em;
+            color: #3f28d5; /* Warna ulang tahun */
+        }
+        /* Ornamen ulang tahun di sisi */
+        .birthday-ornament {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+        }
+        .ornament-left {
+            top: -30px;
+            left: -30px;
+        }
+        .ornament-right {
+            top: -30px;
+            right: -30px;
+        }
+        .position-1, .position-6 {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .position-2 {
+            top: 10%;
+            left: 10%;
+            transform: translate(0, 0);
+        }
+        .position-3 {
+            top: 20%;
+            left: 10%;
+            transform: translate(0, 0);
+        }
+        .position-4 {
+            bottom: 20%;
+            right: 10%;
+            transform: translate(0, 0);
+        }
+        .position-5 {
+            bottom: 10%;
+            right: 10%;
+            transform: translate(0, 0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pop-up sebelum masuk ke situs -->
+    <div id="popup">
+        <div id="popup-content">
+            <h2>Klik Sukiyo untuk meminjamkan uang</h2>
+            <img src="ryo2.jpeg" alt="Opening Image"> <!-- Ganti dengan URL gambar pembuka -->
+            <button id="sukiyo-btn" class="blue">Sukiyo</button>
+            <button id="gkda-btn" class="red">Gk Ada Duit</button>
+        </div>
+    </div>
+
+    <!-- Area animasi teks -->
+    <div class="text position-1" id="text-0" data-time="1000">suki yo</div>
+    <div class="text position-2" id="text-1" data-time="3000">ima anata ni omoi nosete</div>
+    <div class="text position-3" id="text-2" data-time="3500">hora sunao ni naru no watashi</div>
+    <div class="text position-4 shadow" id="text-3" data-time="5500">kono saki motto soba ni ite mo ii ka na?</div>
+    <div class="text position-5 shadow" id="text-4" data-time="2000">koi to koi ga kasanatte</div>
+    <div class="text position-6" id="text-5" data-time="1000">suki yo</div>
+
+    <!-- Pop-up akhir setelah animasi teks selesai -->
+    <div id="popup-end" style="display: none;">
+        <div id="popup-end-content">
+            <img src="Ryo Yamada (7).jpeg" alt="Birthday Cake"> <!-- Ganti dengan URL gambar ulang tahun -->
+            <h2>HAPPY BIRTHDAY RYO YAMADA</h2>
+            </div>
+    </div>
+
+    <script>
+        // Play music once (no repeat)
+        const audioPopup = new Audio('ciki.mp3'); // Ganti dengan musik 3 detik untuk popup
+        const audioBackground = new Audio('sukiyo.mp3'); // Ganti dengan musik latar untuk background
+
+        // Popup handling
+        const popup = document.getElementById('popup');
+        const sukiyoBtn = document.getElementById('sukiyo-btn');
+        const gkdaBtn = document.getElementById('gkda-btn');
+
+        function swapButtons() {
+            const tempText = sukiyoBtn.innerHTML;
+            sukiyoBtn.innerHTML = gkdaBtn.innerHTML;
+            gkdaBtn.innerHTML = tempText;
+
+            const tempClass = sukiyoBtn.className;
+            sukiyoBtn.className = gkdaBtn.className;
+            gkdaBtn.className = tempClass;
+        }
+
+        gkdaBtn.addEventListener('click', () => {
+            swapButtons(); // Tukar posisi tombol
+        });
+
+        sukiyoBtn.addEventListener('click', () => {
+            popup.style.display = 'none'; // Hilangkan popup pembuka
+            audioPopup.play(); // Putar musik popup selama 3 detik
+            setTimeout(() => {
+                audioBackground.play(); // Putar musik latar setelah popup pembuka
+                startAnimation(); // Mulai animasi teks
+            }, 3000); // Tunggu 3 detik hingga musik popup selesai
+        });
+
+        // Animasi teks
+        let texts = document.querySelectorAll('.text');
+        let index = 0;
+
+        function startAnimation() {
+            showText();
+        }
+
+        function showText() {
+            if (index > 0) {
+                texts[index - 1].classList.remove('show');
+            } else if (index === 0) {
+                texts[texts.length - 1].classList.remove('show');
+            }
+            texts[index].classList.add('show');
+            
+            let displayTime = parseInt(texts[index].getAttribute('data-time'));
+
+            setTimeout(() => {
+                texts[index].classList.remove('show');
+                index = (index + 1) % texts.length;
+                if (index === 0) {
+                    // Tampilkan popup ulang tahun setelah teks terakhir selesai
+                    document.getElementById('popup-end').style.display = 'flex';
+                } else {
+                    setTimeout(showText, 1000); // 1 detik waktu fade out
+                }
+            }, displayTime);
+        }
+    </script>
+</body>
+</html>
